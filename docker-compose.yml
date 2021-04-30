@@ -1,0 +1,21 @@
+version: "3.5"
+services:
+  mqtt-reader:
+    build: mqtt-reader
+    command: -server tcp://mqtt.hsl.fi:1883 -topic "/hfp/v2/journey/ongoing/vp/tram/+/00461/#"
+    logging:
+      driver: fluentd
+      options:
+        tag: docker-mqtt-reader
+    depends_on:
+      - fluentbit
+    
+  fluentbit:
+    image: fluent/fluent-bit:1.7
+    volumes:
+      - ${PWD}/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
+      - ${PWD}/parsers.conf:/fluent-bit/etc/parsers-mqtt.conf:ro
+      - ${PWD}/stream_processor.conf:/fluent-bit/etc/stream_processor.conf:ro
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
