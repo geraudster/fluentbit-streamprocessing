@@ -1,4 +1,4 @@
-# Fluentbit stream processing
+# Fluent Bit stream processing
 
 This project performs some [stream processing with Fluent
 Bit](https://docs.fluentbit.io/manual/stream-processing/introduction) from [Digitransit vehicule
